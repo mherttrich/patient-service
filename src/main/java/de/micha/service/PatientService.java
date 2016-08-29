@@ -39,6 +39,9 @@ public class PatientService {
         GetResponse response = elasticClient.prepareGet(index, type, String.valueOf(id)).get();
 
         String json = response.getSourceAsString();
+        if (response.isSourceEmpty()){
+            //TODO return 404
+        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 

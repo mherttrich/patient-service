@@ -16,7 +16,7 @@ import java.util.Optional;
 class PatientApp {
 
     @Inject
-    private PatientService elasticSearchService;
+    private  PatientService elasticSearchService;
 
 
     List<PatientView> getPatinent(Long customerId) {

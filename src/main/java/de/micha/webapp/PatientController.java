@@ -1,5 +1,6 @@
 package de.micha.webapp;
 
+import de.micha.domain.Patient;
 import de.micha.webapp.view.PatientView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +22,13 @@ class PatientController {
     @RequestMapping(value = "patient/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<PatientView> getUser(@PathVariable(value = "id") Long id) {
-        LOG.info("customerId:{}", id);
         return patientApp.getPatinent(id);
+    }
+
+    @RequestMapping(value = "patient/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public void getUser(@PathVariable(value = "id") Long id, @RequestBody Patient patient) {
+        LOG.info(patient.getFirstName());
     }
 
 

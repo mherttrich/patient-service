@@ -33,21 +33,17 @@
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Echo POST"
+                        "description": "patient created"
                     }
                 },
                 "parameters": [
                     {
-                        "name": "name",
-                        "in": "formData",
-                        "description": "name",
-                        "type": "string"
-                    },
-                    {
                         "name": "firstName",
-                        "in": "formData",
-                        "description": "firstName",
-                        "type": "string"
+                        "in": "body",
+                        "required": true,
+                        "description": "firstName of patient",
+                        "type": "string",
+                        "examples": "fsdf"
                     }
                 ]
             }
