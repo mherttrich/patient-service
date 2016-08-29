@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -25,10 +26,10 @@ class PatientController {
         return patientApp.getPatinent(id);
     }
 
-    @RequestMapping(value = "patient/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "patient/", method = RequestMethod.POST)
     @ResponseBody
-    public void getUser(@PathVariable(value = "id") Long id, @RequestBody Patient patient) {
-        LOG.info(patient.getFirstName());
+    public List<String> getUser(@RequestBody Patient patient) {
+        return Arrays.asList(new String[]{"still not implemented to persist " + patient.getFirstName()});
     }
 
 
