@@ -1,0 +1,56 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "patient-service resources",
+        "description": "#### currently api only offers reading and creating of patients\nFeel free to make a path or an operation and use **Try Operation** to test it. This server will render back everything.\n"
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:8080",
+    "basePath": "/resource",
+    "paths": {
+        "/patient/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns the user with this id"
+                    }
+                }
+            }
+        },
+        "/patient/": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Echo POST"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "firstName",
+                        "in": "formData",
+                        "description": "firstName",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    }
+}
