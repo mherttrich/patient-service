@@ -1,9 +1,11 @@
 package de.micha.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.micha.domain.Patient;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +41,8 @@ public class PatientService {
         GetResponse response = elasticClient.prepareGet(index, type, String.valueOf(id)).get();
 
         String json = response.getSourceAsString();
-        if (response.isSourceEmpty()){
-            //TODO return 404
+        if (response.isSourceEmpty()) {
+            return Optional.empty();
         }
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -53,9 +55,23 @@ public class PatientService {
             LOG.error(e.getMessage());
             return Optional.empty();
         }
-
-
-
     }
+
+        public void postPatient(Patient patient){
+        //todo create mapper once in config
+            ObjectMapper mapper = new ObjectMapper();
+            String json = null;
+            try {
+                json = mapper.writeValueAsString(patient);
+            } catch (JsonProcessingException e) {
+                LOG.error(e.getMessage());
+            }
+            IndexResponse response = elasticClient.prepareIndex("appatwork", "patient")
+                    .setSource(json)
+                    .get();
+        }
+
+
+
 
 }

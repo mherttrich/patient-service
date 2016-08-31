@@ -23,11 +23,22 @@ class PatientApp {
         List<PatientView> views = Lists.newArrayList();
 
         Optional<Patient> patient = elasticSearchService.getPatient(customerId);
-        //views might remain empty, if Optional is empty
-        patient.map((p -> views.add(ViewAssembler.assemble(p))));
+        if (patient.isPresent()) {
+            //views might remain empty, if Optional is empty
+            patient.map((p -> views.add(ViewAssembler.assemble(p))));
+        } else{
+            // return 404
 
-
-
+        }
         return views;
+
+    }
+
+
+    void postPatient(PatientView view){
+        Patient p = new Patient();
+        p.setLastName(view.getName());
+        p.setHeight(view.getHeight());
+        elasticSearchService.postPatient(p);
     }
 }

@@ -38,10 +38,10 @@
                 },
                 "parameters": [
                     {
-                        "name": "firstName",
+                        "name": "Patient",
                         "in": "body",
                         "required": true,
-                        "description": "firstName of patient",
+                        "description": "Patient as json",
                         "type": "string",
                         "examples": "fsdf"
                     }

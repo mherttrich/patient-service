@@ -74,4 +74,48 @@ public class Patient {
     public String getHealthInsuranceNumber() {
         return health_insurance_number;
     }
+
+    public void setFirstName(String firsName) {
+        this.first_name = firsName;
+    }
+
+    public void setLastName(String lastName) {
+        this.last_name = lastName;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.date_of_birth = dateOfBirth;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    public void setHealthInsuranceNumber(String healthhealthInsuranceNumber) {
+        this.health_insurance_number = healthhealthInsuranceNumber;
+    }
+
+    public void setMedicalHistory(List<String> medicalHistory) {
+        this.medical_history = medicalHistory;
+    }
 }
