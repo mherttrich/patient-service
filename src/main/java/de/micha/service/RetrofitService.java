@@ -6,7 +6,7 @@ package de.micha.service;
 public interface RetrofitService {
     /*
     @GET("make")
-    Call<List<Patient>> getAllMakes();
+    Call<List<Patient>> getAllPatients();
 
     @GET("translation/bodytype/{bodyType}")
     Call<String> getBodyTypeName(@Path("bodyType") String bodyType, @Query("locale") Locale locale);
