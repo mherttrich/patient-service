@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Import;
 @Import(MainConfig.class)
 public class Application extends SpringBootServletInitializer {
 
-    // to run with tomcat-embed-core
-    // java -jar foo-1.0-SNAPSHOT.jar
 
     // pass VMarg -Dtomcat.logdir=/tmp
     public static void main(String[] args) {
