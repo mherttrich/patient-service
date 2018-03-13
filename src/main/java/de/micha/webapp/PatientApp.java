@@ -19,14 +19,14 @@ class PatientApp {
     private  PatientService elasticSearchService;
 
 
-    List<PatientView> getPatinent(Long customerId) {
+    List<PatientView> getPatinent(String customerId) {
         List<PatientView> views = Lists.newArrayList();
 
         Optional<Patient> patient = elasticSearchService.getPatient(customerId);
         if (patient.isPresent()) {
             //views might remain empty, if Optional is empty
             patient.map((p -> views.add(ViewAssembler.assemble(p))));
-        } else{
+        } else{//TODO
             // return 404
 
         }

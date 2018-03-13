@@ -7,7 +7,9 @@ import java.util.List;
 /**
  * Created by micha on 29.08.16.
  */
-public class Patient {
+public class Patient implements ElasticType{
+
+    private String id;
 
     @JsonProperty
     private String first_name;
@@ -118,4 +120,14 @@ public class Patient {
     public void setMedicalHistory(List<String> medicalHistory) {
         this.medical_history = medicalHistory;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

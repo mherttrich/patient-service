@@ -2,6 +2,7 @@ package de.micha.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.micha.domain.ElasticType;
 import de.micha.exception.ElasticException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -26,17 +27,19 @@ public class ElasticDao {
     @Inject
     private ObjectMapper mapper;
 
-    public <T> Optional<T> get(String index, String type, String id, Class<T> clazz){
+    public <T extends ElasticType> Optional<T> get(String index, String type, String id, Class<T> clazz){
 
         GetResponse response = elasticClient.prepareGet(index, type, id).get();
+
         if (response.isSourceEmpty()){
             return  Optional.empty();
         }
         try {
             T document = mapper.readValue(response.getSourceAsString(), clazz);
+            document.setId(response.getId());
             return Optional.of(document);
         } catch (IOException e) {
-            throw new ElasticException("Failed to load document.", e);
+            throw new ElasticException("Failed to map document.", e);
         }
     }
 
@@ -49,7 +52,7 @@ public class ElasticDao {
                     .setSource(json)
                     .get();
             if (response.status() != RestStatus.CREATED){
-                throw new RuntimeException("RestStatus:" + response.status());
+                throw new ElasticException("RestStatus:" + response.status());
             }
         } catch (JsonProcessingException e) {
             LOG.error("failed to save {}",  type , e);

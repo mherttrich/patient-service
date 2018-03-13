@@ -20,7 +20,7 @@ class PatientController {
 
     @RequestMapping(value = "patient/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<PatientView> getPatient(@PathVariable(value = "id") Long id) {
+    public List<PatientView> getPatient(@PathVariable(value = "id") String id) {
         return patientApp.getPatinent(id);
     }
 

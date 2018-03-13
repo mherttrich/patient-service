@@ -27,8 +27,8 @@ public class PatientService {
     @Value("${elastic.type}")
     private String type;
 
-    public Optional<Patient> getPatient(long id) {
-        return elasticDao.get(index, type, String.valueOf(id), Patient.class);
+    public Optional<Patient> getPatient(String id) {
+        return elasticDao.get(index, type, id, Patient.class);
     }
 
     public void postPatient(Patient patient) {
