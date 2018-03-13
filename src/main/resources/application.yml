@@ -1,0 +1,6 @@
+elastic:
+    host: localhost
+    port: 9300
+
+    index: appatwork
+    type: patient

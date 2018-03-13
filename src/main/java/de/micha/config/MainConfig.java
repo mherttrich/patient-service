@@ -12,7 +12,7 @@ import org.springframework.core.io.ResourceLoader;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 
 //@EnableTransactionManagement
-@PropertySource("${props.path:classpath:}/application.properties")
+@PropertySource("${props.path:classpath:}/application.yml")
 @Import({ElasticConfig.class})
 class MainConfig implements ResourceLoaderAware {
 

@@ -9,10 +9,10 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -28,12 +28,10 @@ public class PatientService {
     @Inject
     private Client elasticClient;
 
-    @Inject
-    @Named("index")
+    @Value("${elastic.index}")
     private String index;
 
-    @Inject
-    @Named("type")
+    @Value("${elastic.type}")
     private String type;
 
     public Optional<Patient> getPatient(long id) {
@@ -66,7 +64,7 @@ public class PatientService {
             } catch (JsonProcessingException e) {
                 LOG.error(e.getMessage());
             }
-            IndexResponse response = elasticClient.prepareIndex("appatwork", "patient")
+            IndexResponse response = elasticClient.prepareIndex(index, type)
                     .setSource(json)
                     .get();
         }

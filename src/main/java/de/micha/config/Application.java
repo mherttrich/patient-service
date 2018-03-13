@@ -1,23 +1,14 @@
 package de.micha.config;
 
-
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-
+@SpringBootApplication
 @Import(MainConfig.class)
-public class Application extends SpringBootServletInitializer {
+public class Application {
 
-
-    // pass VMarg -Dtomcat.logdir=/tmp
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(Application.class);
+        SpringApplication.run(de.micha.config.Application.class, args);
     }
 }

@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-
-    <artifactId>patient-service</artifactId>
     <groupId>de.micha</groupId>
-    <version>1.0</version>
-    <name>patient-service</name>
-    <url>http://maven.apache.org</url>
+    <artifactId>patient-service</artifactId>
+    <version>1.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
+    <name>patient-service</name>
+    <description>patient service</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.11.BUILD-SNAPSHOT</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <start-class>de.micha.config.Application</start-class>
+        <java.version>1.8</java.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- Import dependency management from Spring Boot -->
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.2.3.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--dependency>
+        <!- will immediately secure the app, and we need configuration for
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,7 +44,24 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>5.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>5.1.1</version>
         </dependency>
 
         <dependency>
@@ -52,7 +73,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>16.0</version>
+            <version>23.0</version>
         </dependency>
 
         <dependency>
@@ -66,44 +87,37 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
+            <version>2.16.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.10.0</version>
         </dependency>
 
         <!-- *** http client / retrofit ***
 
-        <dependency>
-            <groupId>com.squareup.okhttp</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>2.5.0</version>
-        </dependency>
+       <dependency>
+           <groupId>com.squareup.okhttp</groupId>
+           <artifactId>okhttp</artifactId>
+           <version>2.5.0</version>
+       </dependency>
 
-        <dependency>
-            <groupId>com.squareup.retrofit</groupId>
-            <artifactId>retrofit</artifactId>
-            <version>2.0.0-beta2</version>
-        </dependency>
+       <dependency>
+           <groupId>com.squareup.retrofit</groupId>
+           <artifactId>retrofit</artifactId>
+           <version>2.0.0-beta2</version>
+       </dependency>
 
-        <dependency>
-            <groupId>com.squareup.retrofit</groupId>
-            <artifactId>converter-gson</artifactId>
-            <version>2.0.0-beta2</version>
-        </dependency>-->
-
-
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
-            <version>6.2.2</version>
-        </dependency>
-
-
-        <!--dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency-->
-
+       <dependency>
+           <groupId>com.squareup.retrofit</groupId>
+           <artifactId>converter-gson</artifactId>
+           <version>2.0.0-beta2</version>
+       </dependency>-->
 
     </dependencies>
+
 
     <build>
         <plugins>
@@ -118,4 +132,45 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+
 </project>
+
