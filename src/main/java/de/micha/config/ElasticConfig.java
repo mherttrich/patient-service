@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PreDestroy;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -21,14 +22,20 @@ class ElasticConfig {
     @Value("${elastic.port}")
     int elasticport;
 
+    private Client client;
+
     @Bean
     Client elasticService() throws UnknownHostException {
-
-
-        return new PreBuiltTransportClient(Settings.EMPTY)
+        client =  new PreBuiltTransportClient(Settings.EMPTY)
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+        return client;
+    }
 
-
+    @PreDestroy
+    void shutdown(){
+        if (client != null) {
+            client.close();
+        }
     }
 
 }

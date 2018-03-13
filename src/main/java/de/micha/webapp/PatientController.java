@@ -1,6 +1,5 @@
 package de.micha.webapp;
 
-import de.micha.domain.Patient;
 import de.micha.webapp.view.PatientView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ class PatientController {
         return patientApp.getPatinent(id);
     }
 
-    @RequestMapping(value = "patient/", method = RequestMethod.POST)
+    @RequestMapping(value = "patient", method = RequestMethod.POST)
     @ResponseBody
     public void postPatient(@RequestBody PatientView patient) {
         //try nested objects
