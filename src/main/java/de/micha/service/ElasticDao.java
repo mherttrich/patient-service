@@ -6,15 +6,25 @@ import de.micha.domain.ElasticType;
 import de.micha.exception.ElasticException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.SearchHit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 @Repository
 public class ElasticDao {
@@ -42,6 +52,36 @@ public class ElasticDao {
         } catch (IOException e) {
             throw new ElasticException("Failed to map document.", e);
         }
+    }
+
+
+    public <T> List<T> search(String index, String type,  Map<String,String> args, Class<T> clazz) throws IOException {
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+
+
+        args.forEach((k, v) ->{
+            queryBuilder.must(termQuery(k, v.toLowerCase()));
+        });
+
+
+        SearchRequestBuilder requestBuilder = elasticClient.prepareSearch(index)
+                .setTypes(type)
+                .setQuery(queryBuilder);
+
+
+        SearchResponse response = requestBuilder
+                .setFrom(0)
+                .setSize(100)
+                .get();
+        System.out.println("hits: " +response.getHits().totalHits());
+
+        ArrayList<T> result = new ArrayList<>();
+        for (SearchHit hit : response.getHits().getHits()) {
+            T document = mapper.readValue(hit.getSourceAsString(), clazz);
+            result.add(document);
+        }
+        return result;
+
     }
 
 
