@@ -1,5 +1,7 @@
 package de.micha.webapp;
 
+import de.micha.domain.Patient;
+import de.micha.service.PatientService;
 import de.micha.webapp.view.PatientView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ class PatientController {
 
     @Inject
     private PatientApp patientApp;
+    @Inject
+    private PatientService patientService;
 
     @RequestMapping(value = "patient/{id}", method = RequestMethod.GET)
     @ResponseBody
@@ -31,5 +35,11 @@ class PatientController {
         patientApp.postPatient(patient);
     }
 
+
+    @RequestMapping(value = "patient", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Patient> getPatient(@RequestParam("lastName") String lastName, @RequestParam("insuranceNumber") String insuranceNumber)  {
+        return patientService.searchPatient(lastName, insuranceNumber);
+    }
 
 }

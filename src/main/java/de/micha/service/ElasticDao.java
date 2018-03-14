@@ -73,7 +73,7 @@ public class ElasticDao {
                 .setFrom(0)
                 .setSize(100)
                 .get();
-        System.out.println("hits: " +response.getHits().totalHits());
+        //System.out.println("hits: " +response.getHits().totalHits());
 
         ArrayList<T> result = new ArrayList<>();
         for (SearchHit hit : response.getHits().getHits()) {

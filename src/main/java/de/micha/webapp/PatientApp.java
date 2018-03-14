@@ -31,7 +31,6 @@ class PatientApp {
 
         }
         return views;
-
     }
 
 
