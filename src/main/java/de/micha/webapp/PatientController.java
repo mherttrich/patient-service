@@ -5,6 +5,7 @@ import de.micha.service.PatientService;
 import de.micha.webapp.view.PatientView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -30,16 +31,17 @@ class PatientController {
 
     @RequestMapping(value = "patient", method = RequestMethod.POST)
     @ResponseBody
-    public void postPatient(@RequestBody PatientView patient) {
+    public ResponseEntity<Void> postPatient(@RequestBody PatientView patient) {
         //try nested objects
         patientApp.postPatient(patient);
+        return ResponseEntity.accepted().build();
     }
 
 
     @RequestMapping(value = "patient", method = RequestMethod.GET)
     @ResponseBody
-    public List<Patient> getPatient(@RequestParam("lastName") String lastName, @RequestParam("insuranceNumber") String insuranceNumber)  {
-        return patientService.searchPatient(lastName, insuranceNumber);
+    public ResponseEntity<List<Patient>> getPatient(@RequestParam("lastName") String lastName, @RequestParam("insuranceNumber") String insuranceNumber)  {
+        return ResponseEntity.ok(patientService.searchPatient(lastName, insuranceNumber));
     }
 
 }
